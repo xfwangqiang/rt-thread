@@ -10,7 +10,7 @@
 #ifndef __FINSH_H__
 #define __FINSH_H__
 
-#include <rtthread.h>
+#include <rtdef.h>
 
 #if defined(_MSC_VER)
     #pragma section("FSymTab$f",read)

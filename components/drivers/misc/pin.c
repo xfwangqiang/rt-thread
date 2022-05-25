@@ -170,20 +170,19 @@ rt_base_t rt_pin_get(const char *name)
 }
 
 #ifdef FINSH_USING_MSH
+#include <stdlib.h>
 
 static void print_usage(void)
 {
-    rt_kprintf("\npin operate command\n");
-    rt_kprintf("Usage : pin [option] [pin_num] ...\n");
-    rt_kprintf("option : \n");
-    rt_kprintf("\tnum\t: get pin number from hardware pin, \n\t\t e.g. MSH >pin num PA16\n");
-    rt_kprintf("\tmode\t: set pin mode to output/input/input_pullup/input_pulldown/output_od, \n\t\t e.g. MSH >pin mode PA16 output\n");
-    rt_kprintf("\tread\t: read pin level of hardware pin, \n\t\t e.g. MSH >pin read PA16\n");
-    rt_kprintf("\twrite\t: write pin level(high/low or on/off) to hardware pin, \n\t\t e.g. MSH >pin write PA16 high\n");
-    rt_kprintf("\thelp\t: this help list\n");
+    rt_kprintf("Usage: pin [option]\n");
+    rt_kprintf("  num: get pin number from hardware pin, \n    e.g. MSH >pin num PA16\n");
+    rt_kprintf("  mode: set pin mode to output/input/input_pullup/input_pulldown/output_od, \n    e.g. MSH >pin mode PA16 output\n");
+    rt_kprintf("  read: read pin level of hardware pin, \n    e.g. MSH >pin read PA16\n");
+    rt_kprintf("  write: write pin level(high/low or on/off) to hardware pin, \n    e.g. MSH >pin write PA16 high\n");
+    rt_kprintf("  help: this help list\n");
 }
 
-/*e.g. MSH >pin num PA16*/
+/* e.g. MSH >pin num PA16 */
 static void pin_get(int argc, char *argv[])
 {
     rt_base_t pin;
@@ -201,7 +200,7 @@ static void pin_get(int argc, char *argv[])
     rt_kprintf("%s : %d\n", argv[2], pin);
 }
 
-/*e.g. MSH >pin mode PA16 output*/
+/* e.g. MSH >pin mode PA16 output */
 static void pin_mode(int argc, char *argv[])
 {
     rt_base_t pin;
@@ -222,7 +221,7 @@ static void pin_mode(int argc, char *argv[])
     }
     else
     {
-        pin = msh_strtoint(argv[2]);
+        pin = atoi(argv[2]);
     }
     if (0 == rt_strcmp("output", argv[3]))
     {
@@ -253,7 +252,7 @@ static void pin_mode(int argc, char *argv[])
     rt_pin_mode(pin, mode);
 }
 
-/*e.g. MSH >pin read PA16*/
+/* e.g. MSH >pin read PA16 */
 static void pin_read(int argc, char *argv[])
 {
     rt_base_t pin;
@@ -274,7 +273,7 @@ static void pin_read(int argc, char *argv[])
     }
     else
     {
-        pin = msh_strtoint(argv[2]);
+        pin = atoi(argv[2]);
     }
     value = rt_pin_read(pin);
     if (value == PIN_HIGH)
@@ -287,7 +286,7 @@ static void pin_read(int argc, char *argv[])
     }
 }
 
-/*e.g. MSH >pin write PA16 high*/
+/* e.g. MSH >pin write PA16 high */
 static void pin_write(int argc, char *argv[])
 {
     rt_base_t pin;
@@ -308,7 +307,7 @@ static void pin_write(int argc, char *argv[])
     }
     else
     {
-        pin = msh_strtoint(argv[2]);
+        pin = atoi(argv[2]);
     }
     if ((0 == rt_strcmp("high", argv[3])) || (0 == rt_strcmp("on", argv[3])))
     {
@@ -355,5 +354,5 @@ static void pin_cmd(int argc, char *argv[])
         return;
     }
 }
-MSH_CMD_EXPORT_ALIAS(pin_cmd, pin, pin operate command);
+MSH_CMD_EXPORT_ALIAS(pin_cmd, pin, pin [option]);
 #endif /* FINSH_USING_MSH */
